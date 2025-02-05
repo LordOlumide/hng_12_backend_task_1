@@ -8,12 +8,18 @@ const PORT = process.env.port || 3001;
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.redirect("/api/classify-number");
+});
+
 app.get("/api/classify-number", async (req, res) => {
   try {
     let queryNumber = req.query.number;
-    if (typeof number !== 'number') {
+    if (typeof parseInt(queryNumber) !== 'number') {
+      console.log("triggered");
       throw "not a number";
     }
+    console.log(typeof queryNumber);
 
     let digitSum = getDigitSum(queryNumber);
     let isOdd = queryNumber % 2 === 1;
@@ -24,6 +30,8 @@ app.get("/api/classify-number", async (req, res) => {
       numberProperties.push("armstrong");
     }
     numberProperties.push(isOdd ? "odd" : "even");
+
+    let funFact = await axios.get(`http://numbersapi.com/${queryNumber}/math`);
     
     let returnValue = {
       number: queryNumber,
@@ -31,11 +39,12 @@ app.get("/api/classify-number", async (req, res) => {
       is_perfect: queryNumber === digitSum,
       properties: numberProperties,
       digit_sum: digitSum,
-      fun_fact: await axios.get(`http://numbersapi.com/${queryNumber}/math`),
+      fun_fact: funFact.data,
     };
 
     res.json(returnValue);
   } catch (error) {
+    console.log(error);
     let errorReturnValue = {
       number: "alphabet",
       error: true,
