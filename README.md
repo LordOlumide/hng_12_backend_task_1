@@ -4,7 +4,7 @@ This is a task for HNG 12 internship. This project is an API that takes a number
 returns interesting mathematical properties about it, along with a fun fact.
 
 
-## Endpint: `curl https://hng-12-backend-task-1.vercel.app/api/classify-number?number=20`
+## Endpint: "curl https://hng-12-backend-task-1.vercel.app/api/classify-number?number=100"
 
 ## Return format of successful request (200 OK):
 {

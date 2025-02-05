@@ -69,7 +69,7 @@ function isPrime(n) {
 }
 
 function getDigitSum(n) {
-  return n
+  return Math.abs(n)
     .toString()
     .split("")
     .reduce((sum, digit) => sum + parseInt(digit), 0);
