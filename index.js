@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 app.get("/api/classify-number", async (req, res) => {
   try {
     let queryNumber = req.query.number;
-    if (typeof parseInt(queryNumber) !== 'number') {
+    if (typeof parseInt(queryNumber) !== "number") {
       console.log("triggered");
       throw "not a number";
     }
@@ -32,7 +32,7 @@ app.get("/api/classify-number", async (req, res) => {
     numberProperties.push(isOdd ? "odd" : "even");
 
     let funFact = await axios.get(`http://numbersapi.com/${queryNumber}/math`);
-    
+
     let returnValue = {
       number: queryNumber,
       is_prime: isPrime(queryNumber),
@@ -65,28 +65,28 @@ function isPrime(n) {
       }
     }
   }
+  return isPrime;
 }
 
 function getDigitSum(n) {
-  Math.abs(n)
+  return n
     .toString()
     .split("")
-    .reduce((sum, char) => sum + parseInt(char, 10), 0);
+    .reduce((sum, digit) => sum + parseInt(digit), 0);
 }
 
 function isArmstrongNumber(n) {
   if (n < 0) {
     return false;
   }
-  const numStr = n.toString();
+  let numStr = new String(n);
   const numDigits = numStr.length;
 
   let sum = 0;
   for (let char of numStr) {
-    const digit = parseInt(char, 10);
-    sum += Math.pow(digit, numDigits);
+    sum = sum + parseInt(char) ** numDigits;
   }
-  return sum === n;
+  return sum == n;
 }
 
 app.listen(PORT, () => {
